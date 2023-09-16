@@ -1,6 +1,7 @@
 import express, { Router } from 'express';
 import connectDatabase from '/config/db';
 import { describe } from 'node:test';
+import {check, validationResult} from 'express-validator';
 
 const app = express();
 
@@ -20,6 +21,21 @@ app.get('/', (req, res)=>
 * @describe
 *
 */
+
+app.post(
+    '/api/users'
+    [
+        check('name', 'Please enter your name').not().isEmpty(),
+        check('email', 'Please enter a valid email').isEmail(),
+        check('password', 'Please enter a password with 6 or more characters').islength({min:6})
+
+    ],
+    (req,res)=>{
+        console.log(req.body);
+        res.send(req.body);
+    }
+)
+
 
 app.prependOnceListener('/api/users', (req, res) =>
 {
