@@ -1,7 +1,13 @@
-import express, { Router } from 'express';
-import connectDatabase from '/config/db';
-import { describe } from 'node:test';
-import {check, validationResult} from 'express-validator';
+import express from 'express';
+import connectDatabase from './config/db';
+import { check, validationResult } from 'express-validator';
+import cors from 'cors';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import config from 'config';
+import User from './models/User';
+import Post from './models/Post';
+import auth from './middleware/auth';
 
 const app = express();
 
